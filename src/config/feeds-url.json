@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "title": "NoSleep Podcast",
+        "url": "https://nosleeppodcast.libsyn.com/rss",        
+        "cssClass": "no-sleep"
+    },
+    {
+        "id": 2,
+        "title": "Midnight Marinara",
+        "url": "http://www.benviewnetwork.com/midnightmarinara?format=rss",        
+        "cssClass": "midnight-marinara"
+    },
+    {
+        "id": 3,
+        "title": "Frozen Frights",
+        "url": "https://www.spreaker.com/show/1606861/episodes/feed",        
+        "cssClass": "frozen-frights"
+    }
+]
