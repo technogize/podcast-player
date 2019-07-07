@@ -6,10 +6,7 @@ import {getFeedData} from './actions/action_get-data';
 import './Podcasts.css';
 
 class Podcasts extends Component {
-    constructor(props) {
-        super(props);
-    }
-  
+    
     selectPodcast = (e) => {
       console.log(e.currentTarget.dataset.url);
       this.props.getFeedData(e.currentTarget.dataset.url);

@@ -3,10 +3,6 @@ import {connect} from 'react-redux';
 import './Episodes.css';
 
 class Episodes extends Component {
-  constructor(props) {
-    super(props);    
-  }
-
   listEpisodes = () => {
     let episodes = this.props.episodes && this.props.episodes.hasOwnProperty('items') ? this.props.episodes.items : [];
     if (episodes.length) {
@@ -17,6 +13,8 @@ class Episodes extends Component {
                     {episode.title}
                 </div>
             }
+
+            return false;
         });
     }
     

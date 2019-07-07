@@ -5,9 +5,6 @@ import Podcasts from './Podcasts';
 import Episodes from './Episodes';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
