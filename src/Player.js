@@ -7,7 +7,7 @@ class Player extends Component {
     return (
       <div className="player">
         <audio id="audio-player" controls>
-          <source src={this.props.nowPlaying} />
+          <source src={this.props.nowPlaying.enclosure.link} />
         </audio>
       </div>
     );
