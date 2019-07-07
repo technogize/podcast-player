@@ -3,6 +3,17 @@ import {connect} from 'react-redux';
 import './Player.css';
 
 class Player extends Component {
+
+  setPlayerTrack = () => {
+    if (this.props.nowPlaying && this.props.nowPlaying.enclosure && this.props.nowPlaying.enclosure.link) {
+      document.querySelector('#audio-player').src = this.props.nowPlaying.enclosure.link;
+      document.querySelector('#audio-player').play();
+      return;
+    } 
+    
+    return false;
+  }
+
   render() {
     return (
       <div className="player">
@@ -11,6 +22,10 @@ class Player extends Component {
         </audio>
       </div>
     );
+  }
+
+  componentDidUpdate() {
+    this.setPlayerTrack();
   }
 }
 
