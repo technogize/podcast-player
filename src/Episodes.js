@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {addPlaylist} from './actions/action_set-playlist';
 import {setTrack} from './actions/action_play';
 import './Episodes.css';
 
@@ -13,14 +14,26 @@ class Episodes extends Component {
     this.props.setTrack(episodeDetails[0]);
   }
 
+  addToPlaylist = (e) => {
+
+    //CREATE function for this::::
+    let episodeDetails = this.props.episodes.items.filter((item) => {
+      return item.guid === e.currentTarget.dataset.guid;
+    });
+    
+    this.props.addPlaylist(episodeDetails[0]);
+  }
+
   listEpisodes = () => {
     let episodes = this.props.episodes && this.props.episodes.hasOwnProperty('items') ? this.props.episodes.items : [];
     if (episodes.length) {
         return episodes.map((episode) => {
             //logic to ensure audio file exists for episode
             if(episode.enclosure && episode.enclosure.link && episode.enclosure.type === 'audio/mpeg') {
-                return <div className="episode" onClick={this.episodePlay} key={episode.guid} data-guid={episode.guid} data-mp3={episode.enclosure.link}>
-                    {episode.title}
+                return <div className="episode" key={episode.guid}>
+                    {episode.title} 
+                    <button onClick={this.episodePlay} data-guid={episode.guid} data-mp3={episode.enclosure.link}>Play</button>
+                    <button onClick={this.addToPlaylist} data-guid={episode.guid} data-mp3={episode.enclosure.link}>Add to playlist</button>
                 </div>
             }
 
@@ -44,13 +57,15 @@ class Episodes extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    episodes: state.feed
+    episodes: state.feed,
+    getPlaylist: state.getPlaylist
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    setTrack: setTrack
+    setTrack: setTrack,
+    addPlaylist: addPlaylist
   }, dispatch);
 }
 

@@ -8,7 +8,6 @@ import './Podcasts.css';
 class Podcasts extends Component {
     
     selectPodcast = (e) => {
-      console.log(e.currentTarget.dataset.url);
       this.props.getFeedData(e.currentTarget.dataset.url);
     }
   

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Player from './Player';
+import Playlist from './Playlist';
 import Podcasts from './Podcasts';
 import Episodes from './Episodes';
 
@@ -14,6 +15,7 @@ class App extends Component {
         </header>
         
         <Player />
+        <Playlist />
         <Podcasts />
         <Episodes />
       </div>
