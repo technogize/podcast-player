@@ -16,5 +16,17 @@
         "title": "Frozen Frights",
         "url": "https://www.spreaker.com/show/1606861/episodes/feed",        
         "cssClass": "frozen-frights"
-    }
+    },
+    {
+        "id": 4,
+        "title": "The Simply Scart Podcast",
+        "url": "https://audioboom.com/channels/4956043.rss",
+        "cssClass": "simply-scary"
+    },
+    {
+        "id": 5,
+        "title": "Mr Creepypasta",
+        "url": "http://feeds.soundcloud.com/users/soundcloud:users:21534608/sounds.rss",
+        "cssClass": "mr-creepypasta"
+    }    
 ]

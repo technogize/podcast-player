@@ -31,7 +31,8 @@ class Player extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    nowPlaying: state.nowPlaying
+    nowPlaying: state.nowPlaying,
+    playMode: state.playMode
   }
 }
 
