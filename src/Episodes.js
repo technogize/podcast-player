@@ -42,7 +42,10 @@ class Episodes extends Component {
     }
     
     return (
-        <div className="no-episodes">No episodes were found for this podcast.</div>
+        <React.Fragment>
+          <h3>Episodes</h3>
+          <div className="no-episodes">No episodes were found for this podcast.</div>
+        </React.Fragment>
     );
   }
 
