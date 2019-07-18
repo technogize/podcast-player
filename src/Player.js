@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {setPlayMode, setTrack} from './actions/action_play';
-import './Player.css';
+import './Player.scss';
 
 class Player extends Component {
   constructor(props) {
@@ -10,8 +10,12 @@ class Player extends Component {
     this.currPlaying = this.props.nowPlaying;
   }
 
+  // TODO: move setPlayerTrack(), playTrack() and pauseTrack() to a global utility
+  // file and import when needed. This will mean componentDidUpdate() will not be
+  // needed in Player.js
+
   setPlayerTrack = () => {
-    if (this.props.nowPlaying && this.currPlaying != this.props.nowPlaying && this.props.nowPlaying.enclosure && this.props.nowPlaying.enclosure.link) {
+    if (this.props.nowPlaying && this.currPlaying !== this.props.nowPlaying && this.props.nowPlaying.enclosure && this.props.nowPlaying.enclosure.link) {
       document.querySelector('#audio-player').src = this.props.nowPlaying.enclosure.link;
       document.querySelector('#audio-player').play();
       this.currPlaying = this.props.nowPlaying;

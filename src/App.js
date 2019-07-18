@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import './App.scss';
 import Player from './Player';
 import Playlist from './Playlist';
 import Podcasts from './Podcasts';

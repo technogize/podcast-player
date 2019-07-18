@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {removePlaylistItem} from './actions/action_set-playlist';
 import {setPlayMode, setTrack} from './actions/action_play';
-import './Playlist.css';
+import './Playlist.scss';
 
 class Playlist extends Component {
     removeFromList = (e) => {

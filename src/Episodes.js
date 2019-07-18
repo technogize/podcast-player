@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addPlaylist} from './actions/action_set-playlist';
 import {setTrack} from './actions/action_play';
-import './Episodes.css';
+import './Episodes.scss';
 
 class Episodes extends Component {
   episodePlay = (e) => {
