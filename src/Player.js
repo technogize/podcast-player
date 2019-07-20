@@ -45,6 +45,14 @@ class Player extends Component {
     this.playerElement.currentTime -= this.skipSeconds;
   }
 
+  audioEnded = () => {
+    if(this.props.playMode !== 'from-playlist') {
+      return;
+    }
+    let nextTrackNo = this.props.getPlaylist.indexOf(this.props.nowPlaying) + 1;
+    this.props.setTrack(this.props.getPlaylist[nextTrackNo]);    
+  }
+
   /**
    * Skip to next or previous track in playlist.
    * 
@@ -81,7 +89,7 @@ class Player extends Component {
       <div className="player">
         <p>Now Playing: {this.props.nowPlaying.title} - {this.props.nowPlaying.author}</p>
         {this.playModeText()}
-        <audio id="audio-player" controls>
+        <audio id="audio-player" onEnded={this.audioEnded} controls>
           <source src={this.props.nowPlaying.enclosure.link} />
         </audio>
         <div>
@@ -97,7 +105,6 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     this.playerElement = document.querySelector(this.playerElementSelector);
   }
 
