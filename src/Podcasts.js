@@ -3,22 +3,30 @@ import { connect } from 'react-redux';
 import feeds from './config/feeds-url.json';
 import {bindActionCreators} from 'redux';
 import {getFeedData} from './actions/action_get-data';
+import {podcastSelect} from './actions/action_podcast-select';
 import './Podcasts.scss';
 
 class Podcasts extends Component {
     
     selectPodcast = (e) => {
+      let selectedPodcast = {
+        id: parseInt(e.currentTarget.dataset.id),
+        title: e.currentTarget.dataset.title
+      }
       this.props.getFeedData(e.currentTarget.dataset.url);
+      this.props.podcastSelect(selectedPodcast);
     }
   
     listPodcasts = () => {
       return feeds.map((feed) => { 
+        let podcastItemClass = 'podcast';
+        
+        if(feed.id === this.props.podcastSelected.id) {
+            podcastItemClass += ' active'
+        }
           
-        return  <div className="podcast" onClick={this.selectPodcast} data-id={feed.id} data-url={feed.url}>
-                    <input type="radio" className="podcast__radio" id={'podcast_' + feed.id} name="podcast" value={feed.title} />
-                    <label  className="podcast__label"
-                            htmlFor={'podcast_' + feed.id} 
-                            key={feed.id}>{feed.title}</label>   
+        return  <div className={podcastItemClass} onClick={this.selectPodcast} key={feed.id} data-id={feed.id} data-url={feed.url} data-title={feed.title}>
+                    <span>{feed.title}</span>
                 </div>
       });
     }
@@ -32,12 +40,20 @@ class Podcasts extends Component {
     }
 }
 
+
+const mapStateToProps = (state) => {
+    return {
+        podcastSelected: state.podcastSelected
+    }
+  }
+
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        getFeedData: getFeedData
+        getFeedData: getFeedData,
+        podcastSelect: podcastSelect
     }, dispatch);
 }
 
 
-export default connect(null, mapDispatchToProps)(Podcasts);
+export default connect(mapStateToProps, mapDispatchToProps)(Podcasts);
   

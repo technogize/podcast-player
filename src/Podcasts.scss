@@ -1,11 +1,7 @@
 .podcasts .podcast {
     cursor: pointer;
     
-    &__radio {
-        display: none;
-
-        &:checked+label {
-            font-weight: bold;
-        }
+    &.active {
+        font-weight: bold;
     }
 }

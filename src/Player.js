@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {setPlayMode, setTrack} from './actions/action_play';
+import {setAlertMsg} from './actions/action_alert-msg';
 import './Player.scss';
 
 class Player extends Component {
   constructor(props) {
     super(props);
     this.currPlaying = this.props.nowPlaying;
+    this.skipSeconds = 15;
+    this.playerElementSelector = '#audio-player';
   }
 
   // TODO: move setPlayerTrack(), playTrack() and pauseTrack() to a global utility
@@ -16,8 +19,8 @@ class Player extends Component {
 
   setPlayerTrack = () => {
     if (this.props.nowPlaying && this.currPlaying !== this.props.nowPlaying && this.props.nowPlaying.enclosure && this.props.nowPlaying.enclosure.link) {
-      document.querySelector('#audio-player').src = this.props.nowPlaying.enclosure.link;
-      document.querySelector('#audio-player').play();
+      this.playerElement.src = this.props.nowPlaying.enclosure.link;
+      this.playerElement.play();
       this.currPlaying = this.props.nowPlaying;
       return;
     } 
@@ -26,11 +29,20 @@ class Player extends Component {
   }
 
   playTrack = () => {
-    document.querySelector('#audio-player').play();
+    this.playerElement.play();
   }
 
   pauseTrack = () => {
-    document.querySelector('#audio-player').pause();
+    this.playerElement.pause();
+    this.props.setAlertMsg('Paused');
+  }
+
+  seekForward = () => {
+    this.playerElement.currentTime += this.skipSeconds;
+  }
+
+  seekRewind = () => {
+    this.playerElement.currentTime -= this.skipSeconds;
   }
 
   /**
@@ -48,21 +60,45 @@ class Player extends Component {
     }
   }
 
+  playModeText = () => {
+    let text = '';
+    switch (this.props.playMode) {
+      case 'from-playlist':
+        text = 'Playing from your playlist';
+        break; 
+      case 'one-off':
+        text = (this.props.podcastSelect) ? `Playing from ${this.props.podcastSelect}` : '';
+        break; 
+      default: 
+        text = '';
+    }
+
+    return <p>{text}</p>;
+  }
 
   render() {
     return (
       <div className="player">
         <p>Now Playing: {this.props.nowPlaying.title} - {this.props.nowPlaying.author}</p>
-        
+        {this.playModeText()}
         <audio id="audio-player" controls>
           <source src={this.props.nowPlaying.enclosure.link} />
         </audio>
-        <button onClick={this.playTrack} data-skip="next">Play</button>
-        <button onClick={this.pauseTrack} data-skip="next">pause</button>
-        <button onClick={this.nextPrevTrack} data-skip="next">NEXT</button>
-        <button onClick={this.nextPrevTrack} data-skip="prev">PREV</button>
+        <div>
+          <button onClick={this.seekForward} data-skip="prev">0:15+</button>
+          <button onClick={this.seekRewind} data-skip="prev">0:15-</button>
+          <button onClick={this.playTrack} data-skip="next">Play</button>
+          <button onClick={this.pauseTrack} data-skip="next">pause</button>
+          <button onClick={this.nextPrevTrack} data-skip="next">NEXT</button>
+          <button onClick={this.nextPrevTrack} data-skip="prev">PREV</button>
+        </div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+    this.playerElement = document.querySelector(this.playerElementSelector);
   }
 
   componentDidUpdate() {
@@ -74,14 +110,16 @@ const mapStateToProps = (state) => {
   return {
     nowPlaying: state.nowPlaying,
     playMode: state.playMode,
-    getPlaylist: state.getPlaylist
+    getPlaylist: state.getPlaylist,
+    podcastSelected: state.podcastSelected
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
       setTrack: setTrack,
-      setPlayMode: setPlayMode
+      setPlayMode: setPlayMode,
+      setAlertMsg: setAlertMsg
   }, dispatch);
 }
 

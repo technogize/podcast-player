@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addPlaylist} from './actions/action_set-playlist';
 import {setTrack} from './actions/action_play';
+import {setPlayMode} from './actions/action_play';
 import './Episodes.scss';
 
 class Episodes extends Component {
@@ -12,6 +13,7 @@ class Episodes extends Component {
     });
 
     this.props.setTrack(episodeDetails[0]);
+    this.props.setPlayMode('one-off');
   }
 
   addToPlaylist = (e) => {
@@ -68,7 +70,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     setTrack: setTrack,
-    addPlaylist: addPlaylist
+    addPlaylist: addPlaylist,
+    setPlayMode: setPlayMode
   }, dispatch);
 }
 
