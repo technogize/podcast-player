@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import './App.scss';
 import Player from './Player';
 import Playlist from './Playlist';
 import Podcasts from './Podcasts';
@@ -18,14 +17,14 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h1>Podcast Player</h1>
+          <h1>Horror Podcasts</h1>
         </header>
 
         {alertsComp}
-        <Player />
-        <Playlist />
         <Podcasts />
         <Episodes />
+        <Playlist />
+        <Player />
       </div>
     )
   }

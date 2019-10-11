@@ -1,0 +1,15 @@
+.App {
+  text-align: center;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 4fr auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    'header header header'
+    'podcasts episodes playlist'
+    'player player player';
+
+  header {
+    grid-area: header;
+  }
+}

@@ -4,7 +4,6 @@ import feeds from './config/feeds-url.json';
 import {bindActionCreators} from 'redux';
 import {getFeedData} from './actions/action_get-data';
 import {podcastSelect} from './actions/action_podcast-select';
-import './Podcasts.scss';
 
 class Podcasts extends Component {
     
@@ -34,7 +33,8 @@ class Podcasts extends Component {
     render() {
         return (            
             <div className="podcasts">
-                {this.listPodcasts()}
+              <h2 className="c-list__title">Podcasts</h2>
+              {this.listPodcasts()}
             </div>                    
         )
     }

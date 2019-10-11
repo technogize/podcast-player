@@ -1,0 +1,16 @@
+.episodes {
+    position: relative;
+    grid-area: episodes;
+
+    .episode {
+        display: flex;
+        
+
+        &__title {
+            flex: 2;
+        }
+        &__controls {
+            flex: 1;
+        }
+    }
+}

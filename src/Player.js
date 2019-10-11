@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {setPlayMode, setTrack} from './actions/action_play';
-import {setAlertMsg} from './actions/action_alert-msg';
-import './Player.scss';
+import {setPlayMode, setTrack, setPlayerState} from './actions/action_play';
+
 
 class Player extends Component {
   constructor(props) {
     super(props);
     this.currPlaying = this.props.nowPlaying;
     this.skipSeconds = 15;
-    this.playerElementSelector = '#audio-player';
+    this.audioPlayer = React.createRef();
+    this.audioPlayerSelector = '#audio-player';
+    this.seekbarSelector = '#seekbar';
   }
 
   // TODO: move setPlayerTrack(), playTrack() and pauseTrack() to a global utility
@@ -19,8 +20,8 @@ class Player extends Component {
 
   setPlayerTrack = () => {
     if (this.props.nowPlaying && this.currPlaying !== this.props.nowPlaying && this.props.nowPlaying.enclosure && this.props.nowPlaying.enclosure.link) {
-      this.playerElement.src = this.props.nowPlaying.enclosure.link;
-      this.playerElement.play();
+      this.audioPlayer.current.src = this.props.nowPlaying.enclosure.link;
+      this.audioPlayer.current.play();
       this.currPlaying = this.props.nowPlaying;
       return;
     } 
@@ -29,20 +30,19 @@ class Player extends Component {
   }
 
   playTrack = () => {
-    this.playerElement.play();
+    this.audioPlayer.current.play();
   }
 
   pauseTrack = () => {
-    this.playerElement.pause();
-    this.props.setAlertMsg('Paused');
+    this.audioPlayer.current.pause();
   }
 
   seekForward = () => {
-    this.playerElement.currentTime += this.skipSeconds;
+    this.audioPlayer.current.currentTime += this.skipSeconds;
   }
 
   seekRewind = () => {
-    this.playerElement.currentTime -= this.skipSeconds;
+    this.audioPlayer.current.currentTime -= this.skipSeconds;
   }
 
   audioEnded = () => {
@@ -51,6 +51,18 @@ class Player extends Component {
     }
     let nextTrackNo = this.props.getPlaylist.indexOf(this.props.nowPlaying) + 1;
     this.props.setTrack(this.props.getPlaylist[nextTrackNo]);    
+  }
+
+  setSeekbarDuration = () => {
+    document.querySelector(this.seekbarSelector).max = document.querySelector(this.audioPlayerSelector).duration;
+  }
+
+  setSeekbarPosition = () => {
+    document.querySelector(this.seekbarSelector).value = document.querySelector(this.audioPlayerSelector).currentTime;
+  }
+
+  setAudioPlayerTime = () => {
+    document.querySelector(this.audioPlayerSelector).currentTime = document.querySelector(this.seekbarSelector).value;
   }
 
   /**
@@ -75,7 +87,7 @@ class Player extends Component {
         text = 'Playing from your playlist';
         break; 
       case 'one-off':
-        text = (this.props.podcastSelect) ? `Playing from ${this.props.podcastSelect}` : '';
+        text = (this.props.podcastSelect) ? `Playing from ${this.props.podcastSelect} episode list` : '';
         break; 
       default: 
         text = '';
@@ -89,9 +101,10 @@ class Player extends Component {
       <div className="player">
         <p>Now Playing: {this.props.nowPlaying.title} - {this.props.nowPlaying.author}</p>
         {this.playModeText()}
-        <audio id="audio-player" onEnded={this.audioEnded} controls>
+        <audio id="audio-player" onTimeUpdate={this.setSeekbarPosition} onLoadedMetadata={this.setSeekbarDuration} onEnded={this.audioEnded} ref={this.audioPlayer} controls>
           <source src={this.props.nowPlaying.enclosure.link} />
         </audio>
+        <input id="seekbar" type="range" name="rng" min="0" step="0.25" value="0" onChange={this.setAudioPlayerTime} style={{width: 400 + 'px'}}  />
         <div>
           <button onClick={this.seekForward} data-skip="prev">0:15+</button>
           <button onClick={this.seekRewind} data-skip="prev">0:15-</button>
@@ -104,10 +117,6 @@ class Player extends Component {
     );
   }
 
-  componentDidMount() {
-    this.playerElement = document.querySelector(this.playerElementSelector);
-  }
-
   componentDidUpdate() {
     this.setPlayerTrack();
   }
@@ -118,15 +127,15 @@ const mapStateToProps = (state) => {
     nowPlaying: state.nowPlaying,
     playMode: state.playMode,
     getPlaylist: state.getPlaylist,
-    podcastSelected: state.podcastSelected
+    podcastSelected: state.podcastSelected,
+    setPlayerState: state.setPlayerState
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
       setTrack: setTrack,
-      setPlayMode: setPlayMode,
-      setAlertMsg: setAlertMsg
+      setPlayMode: setPlayMode
   }, dispatch);
 }
 

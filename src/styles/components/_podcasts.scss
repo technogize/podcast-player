@@ -1,0 +1,12 @@
+.podcasts {
+    grid-area: podcasts;
+    overflow-y: scroll;
+
+    .podcast {
+        cursor: pointer;
+        
+        &.active {
+            font-weight: bold;
+        }
+    }
+}

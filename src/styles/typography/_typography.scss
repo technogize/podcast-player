@@ -1,0 +1,22 @@
+h1, h2, h3, h4, h5, h6 {
+    font-family: $subtitle-font;
+    color: $white;
+}
+
+h1 {
+    @include font-size(8);
+    color: $title-color;
+    font-family: $title-font;
+}
+
+h2 {
+    @include font-size(4.5);
+}
+
+h3 {
+    @include font-size(3);
+}
+
+#root {
+    @include font-size(1.6);
+}

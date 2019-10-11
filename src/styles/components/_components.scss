@@ -1,0 +1,14 @@
+.c-list {
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+        max-height: 50px;
+    }
+
+    &__list {
+        flex: 1;
+        overflow-y: scroll;
+    }
+}

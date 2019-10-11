@@ -1,0 +1,26 @@
+@import './fonts/open-iconic';
+
+@font-face {
+    font-family: 'BloodBlocks';
+    src: url('./fonts/BloodBlocks.eot');
+    src: url('./fonts/BloodBlocks.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/BloodBlocks.woff2') format('woff2'),
+        url('./fonts/BloodBlocks.woff') format('woff'),
+        url('./fonts/BloodBlocks.ttf') format('truetype'),
+        url('./fonts/BloodBlocks.svg#BloodBlocks') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'True Crimes';
+    src: url('./fonts/TrueCrimes.eot');
+    src: url('./fonts/TrueCrimes.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/TrueCrimes.woff2') format('woff2'),
+        url('./fonts/TrueCrimes.woff') format('woff'),
+        url('./fonts/TrueCrimes.ttf') format('truetype'),
+        url('./fonts/TrueCrimes.svg#TrueCrimes') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+

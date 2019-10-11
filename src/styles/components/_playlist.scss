@@ -1,0 +1,15 @@
+.playlist {
+    grid-area: playlist;
+
+    &__item {
+        display: flex;
+    }
+
+    &__item-title {
+        flex: 2;
+    }
+
+    &__item-controls {
+        flex: 1;
+    }
+}
