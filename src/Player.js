@@ -12,6 +12,7 @@ class Player extends Component {
     this.audioPlayer = React.createRef();
     this.audioPlayerSelector = '#audio-player';
     this.seekbarSelector = '#seekbar';
+    this.trackTime = '';
   }
 
   // TODO: move setPlayerTrack(), playTrack() and pauseTrack() to a global utility
@@ -101,17 +102,17 @@ class Player extends Component {
       <div className="player">
         <p>Now Playing: {this.props.nowPlaying.title} - {this.props.nowPlaying.author}</p>
         {this.playModeText()}
-        <audio id="audio-player" onTimeUpdate={this.setSeekbarPosition} onLoadedMetadata={this.setSeekbarDuration} onEnded={this.audioEnded} ref={this.audioPlayer} controls>
+        <audio id="audio-player" className="player__player" onTimeUpdate={this.setSeekbarPosition} onLoadedMetadata={this.setSeekbarDuration} onEnded={this.audioEnded} ref={this.audioPlayer} controls>
           <source src={this.props.nowPlaying.enclosure.link} />
         </audio>
-        <input id="seekbar" type="range" name="rng" min="0" step="0.25" value="0" onChange={this.setAudioPlayerTime} style={{width: 400 + 'px'}}  />
-        <div>
-          <button onClick={this.seekForward} data-skip="prev">0:15+</button>
-          <button onClick={this.seekRewind} data-skip="prev">0:15-</button>
-          <button onClick={this.playTrack} data-skip="next">Play</button>
-          <button onClick={this.pauseTrack} data-skip="next">pause</button>
-          <button onClick={this.nextPrevTrack} data-skip="next">NEXT</button>
-          <button onClick={this.nextPrevTrack} data-skip="prev">PREV</button>
+        <input id="seekbar" type="range" name="rng" min="0" step="0.25" value="0" onChange={this.setAudioPlayerTime} className="player__seekbar" />
+        <div className="player__controls">
+          <span className="oi" onClick={this.nextPrevTrack} data-skip="prev" data-glyph="media-step-backward" ></span>
+          <span className="oi" onClick={this.seekRewind} data-glyph="media-skip-backward"></span>
+          <span className="oi" onClick={this.playTrack} data-glyph="media-play"></span>
+          <span className="oi" onClick={this.pauseTrack} data-glyph="media-pause"></span>
+          <span className="oi" onClick={this.seekForward} data-glyph="media-skip-forward"></span>
+          <span className="oi" onClick={this.nextPrevTrack} data-skip="next" data-glyph="media-step-forward"></span>          
         </div>
       </div>
     );
